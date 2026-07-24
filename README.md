@@ -1,14 +1,25 @@
-# ETL Apartments - SQL Server Integration Services (SSIS)
+# 🏢 ETL Apartments - SQL Server Integration Services (SSIS)
 
 ## Descripción
 
-Proyecto ETL desarrollado con SQL Server Integration Services (SSIS) para cargar, transformar y validar información de un conjunto de datos de apartamentos en renta.
+Proyecto ETL desarrollado con **SQL Server Integration Services (SSIS)** para extraer, transformar, validar y cargar información de un conjunto de datos de apartamentos en renta hacia una base de datos en **SQL Server**.
 
-El proceso extrae los datos desde el archivo CSV, realiza conversiones de tipos de datos, valida los registros y los almacena en SQL Server.
+El proceso automatiza la carga de datos desde un archivo CSV, aplica reglas de validación mediante **División Condicional (Conditional Split)** y registra tanto los datos válidos como los errores detectados durante la ejecución.
 
 ---
 
-## Tecnologías utilizadas
+## 🚀 Características
+
+- Importación de datos desde un archivo CSV.
+- Conversión de tipos de datos.
+- Validación de registros mediante **División Condicional**.
+- Carga de registros válidos en SQL Server.
+- Registro de datos inválidos para su revisión.
+- Captura de errores de lectura y conversión.
+
+---
+
+## 🛠️ Tecnologías utilizadas
 
 - SQL Server
 - SQL Server Integration Services (SSIS)
@@ -18,38 +29,70 @@ El proceso extrae los datos desde el archivo CSV, realiza conversiones de tipos 
 
 ---
 
-## Flujo ETL
+## 🔄 Flujo ETL
 
-1. Lectura del archivo CSV.
-2. Conversión de tipos de datos.
-3. Validación mediante División Condicional.
-4. Carga de registros válidos en la tabla **Apartments**.
-5. Registro de datos inválidos en la tabla **ErroresCarga**.
-6. Registro de errores de lectura y conversión en **ErroresOrigen**.
+```text
+              Archivo CSV
+                   │
+                   ▼
+          Conversión de datos
+                   │
+                   ▼
+           División Condicional
+     ┌─────────────┴─────────────┐
+     ▼                           ▼
+Registros válidos      Registros inválidos
+     ▼                           ▼
+ Apartments                ErroresCarga
+     │
+     ▼
+Errores de origen
+ErroresOrigen
+```
 
 ---
 
-## Base de datos
+## 🗄️ Base de datos
 
-Se utilizan las siguientes tablas:
+El proyecto utiliza las siguientes tablas:
 
-### Apartments
+### 📋 Apartments
 
-Almacena los registros válidos provenientes del archivo CSV.
+Almacena los registros que cumplen con todas las reglas de validación y son cargados correctamente en la base de datos.
 
-### ErroresCarga
+### ⚠️ ErroresCarga
 
-Almacena los registros que no cumplen las reglas de validación.
+Almacena los registros que no cumplen las reglas de validación definidas en el proceso ETL.
 
-Ejemplo:
+**Ejemplo:**
+
 - Código de estado (`state`) inválido.
 
-### ErroresOrigen
+### ❌ ErroresOrigen
 
-Almacena errores detectados durante la lectura o conversión del archivo.
+Registra los errores detectados durante la lectura del archivo o la conversión de datos.
 
-Campos:
+**Campos principales:**
 
 - ErrorCode
 - ErrorColumn
 - FechaCarga
+
+---
+
+## ▶️ Ejecución del proyecto
+
+1. Abrir la solución en **Visual Studio 2022**.
+2. Restaurar la base de datos correspondiente en **SQL Server**.
+3. Configurar la conexión al servidor si es necesario.
+4. Ejecutar el paquete SSIS.
+5. Verificar la información cargada en las tablas:
+   - `Apartments`
+   - `ErroresCarga`
+   - `ErroresOrigen`
+
+---
+
+## 👨‍💻 Autor
+
+Desarrollado por **HereticSoba**.
